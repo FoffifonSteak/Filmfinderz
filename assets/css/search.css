@@ -1,0 +1,193 @@
+h1 {
+    text-align: center;
+    font-size: 2em;
+    font-weight: bold;
+    margin: 0;
+    padding: 10px 0;
+}
+
+#search-box {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#search-box img {
+    width: 40px;
+    height: 40px;
+    margin: 0 10px;
+}
+
+#search-box input {
+    width: 50%;
+    height: 40px;
+    font-size: 1.2em;
+    padding: 0 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+#search-box button {
+    width: 130px;
+    height: 40px;
+    font-size: 1.2em;
+    margin-left: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #fff;
+}
+
+#search-box button:hover {
+    background-color: #ccc;
+}
+
+#search-box button:active {
+    background-color: #aaa;
+}
+
+.filter {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 200px;
+}
+
+#filter-box {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 20px 0;
+}
+
+#filter-box input {
+    width: 50%;
+    height: 40px;
+    font-size: 1.2em;
+    padding: 0 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin: 10px 0;
+}
+
+#filter-box label {
+    font-size: 1.2em;
+}
+
+#results {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.film-info {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1rem;
+    margin-top: 20px;
+}
+
+.film-info img {
+    width: 150px;
+        height: auto;
+    margin-right: 1rem;
+    border-radius: 0.25rem;
+}
+
+.film-details h3 {
+    margin-top: 0;
+    margin-bottom: 0.5rem;
+    font-size: 1.25rem;
+}
+
+.film-details p {
+    margin-top: 0;
+    margin-bottom: 0.25rem;
+}
+
+.addCart {
+    margin-top: 10px;
+}
+
+.addCart a {
+    color: #000;
+    text-decoration: none;
+/*    button style*/
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 5px 10px;
+    font-size: 16px;
+}
+
+.film-details p:first-of-type {
+    font-weight: bold;
+}
+
+.film-details p:last-of-type {
+    margin-bottom: 0;
+}
+
+.realisateur-info {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.realisateur-info img {
+    width: 150px;
+    height: auto;
+    margin-right: 1rem;
+    border-radius: 0.25rem;
+}
+
+.realisateur-details h3 {
+    margin-top: 0;
+    margin-bottom: 0.5rem;
+    font-size: 1.25rem;
+}
+
+.realisateur-details p {
+    margin-top: 0;
+    margin-bottom: 0.25rem;
+}
+
+.realisateur-details p:first-of-type {
+    font-weight: bold;
+}
+
+.realisateur-details p:last-of-type {
+    margin-bottom: 0;
+}
+
+
+
+@media screen and (max-width: 768px) {
+    #loupe {
+        display: none;
+    }
+    #search-box {
+        flex-direction: column;
+    }
+    #search-box input {
+        width: 100%;
+    }
+    #search-box button {
+        margin-top: 10px;
+        width: 100%;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    #search-box {
+        margin-left: 80px;
+    }
+    #search-box input {
+        width: 60%;
+    }
+    #search-box button {
+        margin-top: 10px;
+        width: 60%;
+    }
+}

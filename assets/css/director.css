@@ -1,0 +1,41 @@
+h1 {
+    text-align: center;
+    font-size: 2em;
+    font-weight: bold;
+    margin-bottom: 30px;
+    padding: 10px 0;
+}
+#results {
+    text-align: center;
+    width: 50%;
+    margin: 0 auto;
+}
+
+.result {
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin-bottom: 20px;
+}
+
+.result h2 {
+    font-size: 1.5rem;
+    margin-bottom: 5px;
+    color: #1cdaff;
+}
+
+.result p {
+    margin-bottom: 10px;
+}
+
+.result p:first-child {
+    font-weight: bold;
+}
+
+.result p:not(:first-child) {
+    margin-top: 5px;
+}
+
+.result img {
+    max-width: 100%;
+    margin-bottom: 10px;
+}

@@ -1,0 +1,81 @@
+main {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+}
+h1 {
+    margin: 0;
+    display: flex;
+    justify-content: center;
+}
+.poster {
+    display: flex;
+    justify-content: center;
+    margin-top: 40px;
+    margin-bottom: 40px;
+}
+
+
+.trailer {
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: center;
+}
+
+.trailer iframe {
+    outline: 1px solid #fff;
+}
+
+.summary h2, .comments h2 {
+    margin-top: 0;
+}
+
+.comments form label, .comments form textarea, .comments form button {
+    display: block;
+    margin-bottom: 10px;
+}
+
+.comment-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.comment-list li {
+    margin-bottom: 20px;
+}
+
+.comment-list li h3 {
+    margin-top: 20px;
+    margin-bottom: 10px;
+}
+
+.comment-list li p {
+    margin: 0;
+    line-height: 1.5;
+}
+
+.addCart {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.addCart a {
+    background-color: #1cdaff;
+    color: #000000;
+    padding: 10px 40%;
+    text-decoration: none;
+    border-radius: 5px;
+/*    animation*/
+}
+
+.addCart a:hover {
+    background-color: #198a9f;
+    color: #000000;
+}
+
+#director {
+    color: white;
+}
