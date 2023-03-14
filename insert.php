@@ -31,29 +31,7 @@ $directors = $statement->fetchAll();
     <title>Ajouter un nouveau film</title>
 </head>
 <body>
-<header>
-    <div class="logo">
-        <a href="index.php"><img src="./assets/images/logo.png" alt="Mon logo"></a>
-    </div>
-    <div class="rightHead">
-        <div class="search">
-            <a href="search.php"><img src="./assets/images/loupe-arrondie.png" alt="loupe"></a>
-        </div>
-        <div class="connect">
-            <?php
-            if (isset($_SESSION['user_id'])) {
-                echo '<a href="logout.php">Se déconnecter</a>';
-                echo '<a style="margin-left: 0; margin-right: 40px" href="#"><i class="fa-solid fa-cart-shopping fa-lg"></i></a>';
-            } else {
-                echo '<a href="signIn.php">Se connecter</a>';
-            }
-            ?>
-        </div>
-        <div class="language">
-            <img src="./assets/images/france.png" alt="flag">
-        </div>
-    </div>
-</header>
+<?php require './header.php' ?>
 <h1>Ajouter un nouveau film</h1>
 <form action="" method="post" enctype="multipart/form-data">
     <label for="title">Titre :</label>
@@ -105,36 +83,7 @@ $directors = $statement->fetchAll();
     <input type="submit" value="Ajouter">
 </form>
 </body>
-<footer>
-    <div class="cartContainer">
-        <div class="footer-row">
-            <div class="footer-column">
-                <h4>Nos produits</h4>
-                <ul>
-                    <li><a href="#">Films</a></li>
-                    <li><a href="#">Réalisateurs</a></li>
-                </ul>
-            </div>
-            <div class="footer-column">
-                <h4>Nos services</h4>
-                <ul>
-                    <li><a href="#">Recherche d'un film</a></li>
-                    <li><a href="#">Newsletter</a></li>
-                    <li><a href="#">Evaluations</a></li>
-                </ul>
-            </div>
-            <div class="footer-column">
-                <h4>Nous suivre</h4>
-                <ul class="social-icons">
-                    <li><a href="#"><i class="fa-brands fa-facebook"></i></a></li>
-                    <li><a href="#"><i class="fa-brands fa-instagram"></i></a></li>
-                    <li><a href="#"><i class="fa-brands fa-twitter"></i></i></a></li>
-                </ul>
-                <a href="#top" class="back-to-top-button">Retour en haut</a>
-            </div>
-        </div>
-    </div>
-</footer>
+<?php require 'footer.html' ?>
 </html>
 
 <?php
@@ -175,7 +124,5 @@ if (!empty($_POST['title']) && !empty($_POST['release_date']) && !empty($_POST['
     }
 
 }
-
-header('Location: search.php');
 
 ?>

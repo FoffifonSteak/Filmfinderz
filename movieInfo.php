@@ -17,7 +17,7 @@ $movie = $statement->fetch();
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
@@ -28,42 +28,11 @@ $movie = $statement->fetch();
           crossorigin="anonymous" referrerpolicy="no-referrer"/>
 </head>
 <body>
-<header>
-    <div class="logo">
-        <a href="index.php"><img src="./assets/images/logo.png" alt="Mon logo"></a>
-    </div>
-    <div class="rightHead">
-        <div class="insert">
-            <?php if (isset($_SESSION['is_admin']) && $_SESSION['is_admin'] === true) : ?>
-                <a href="insert.php">Ajouter un film</a>
-            <?php endif; ?>
-        </div>
-        <div class="search">
-            <a href="search.php"><img src="./assets/images/loupe-arrondie.png" alt="loupe"></a>
-        </div>
-        <div class="connect">
-            <?php
-            if (isset($_SESSION['user_id'])) {
-                echo '<a href="logout.php">Se déconnecter</a>';
-                echo '<a style="margin-left: 0; margin-right: 40px" href="cart.php"><i class="fa-solid fa-cart-shopping fa-lg"></i></a>';
-            } else {
-                echo '<a href="signIn.php">Se connecter</a>';
-            }
-            ?>
-        </div>
-        <div class="language">
-            <img src="./assets/images/france.png" alt="flag">
-        </div>
-    </div>
-</header>
+<?php require './header.php' ?>
 <main>
     <h1><?php echo $movie['title']; ?></h1>
     <div class="poster">
         <img src="./assets/uploads/<?= $movie['poster'] ?>" alt="Image 1">
-    </div>
-    <div class="trailer">
-        <iframe width="560" height="315" src="https://www.youtube.com/embed/tgbNymZ7vqY" frameborder="0"
-                allow="autoplay; encrypted-media" allowfullscreen></iframe>
     </div>
     <div class="summary">
         <h2>Résumé</h2>
@@ -74,7 +43,9 @@ $movie = $statement->fetch();
         <ul>
             <li><span>Date de sortie :</span> <?php echo $movie['release_date']; ?></li>
             <li><span>Genre :</span> <?php echo $movie['genre_names']; ?></li>
-            <li><span><a id="director" href="director.php">Réalisateur :</a></span> <?php echo $movie['first_name'] . ' ' . $movie['last_name']; ?></li>
+            <li><span><a id="director"
+                         href="director.php">Réalisateur :</a></span> <?php echo $movie['first_name'] . ' ' . $movie['last_name']; ?>
+            </li>
             <li><span>Note :</span> <?php echo $movie['rating']; ?>/5</li>
             <li><span>Prix de location :</span> <?php echo $movie['rental_price']; ?> €</li>
         </ul>
@@ -95,55 +66,37 @@ $movie = $statement->fetch();
                 <textarea id="comment" name="comment" rows="4" required></textarea>
                 <input type="hidden" name="movie_id" value="<?= $_GET['id'] ?>">
                 <br>
-                <button type="submit">Post</button>
+                <input type="submit" value="Envoyer">
             </form>
         <?php endif; ?>
+        <?php
+        $sql = 'SELECT comments.comment, comments.username_id, users.username
+                FROM comments
+                INNER JOIN users ON comments.username_id = users.id
+                WHERE comments.movie_id = :id';
+        $statement = $db->prepare($sql);
+
+        $statement->execute([
+            'id' => $_GET['id']
+        ]);
+
+        $comments = $statement->fetchAll();
+        ?>
         <?php if (!empty($comments)): ?>
             <?php foreach ($comments as $comment): ?>
-                <ul>
-                    <li>
-                        <h3><?= $comment['username'] ?></h3>
-                        <p><?= $comment['comment'] ?></p>
-                    </li>
-                </ul>
+                <div class="comment-list">
+                    <ul>
+                        <li>
+                            <h3><?= $comment['username'] ?></h3>
+                            <p><?= $comment['comment'] ?></p>
+                        </li>
+                    </ul>
+                </div>
             <?php endforeach; ?>
-        <?php else: ?>
-            <p>Aucun commentaire</p>
         <?php endif; ?>
-
-
     </div>
+
 </main>
-<footer>
-    <div class="cartContainer">
-        <div class="footer-row">
-            <div class="footer-column">
-                <h4>Nos produits</h4>
-                <ul>
-                    <li><a href="#">Films</a></li>
-                    <li><a href="#">Réalisateurs</a></li>
-                </ul>
-            </div>
-            <div class="footer-column">
-                <h4>Nos services</h4>
-                <ul>
-                    <li><a href="#">Recherche d'un film</a></li>
-                    <li><a href="#">Newsletter</a></li>
-                    <li><a href="#">Evaluations</a></li>
-                </ul>
-            </div>
-            <div class="footer-column">
-                <h4>Nous suivre</h4>
-                <ul class="social-icons">
-                    <li><a href="#"><i class="fa-brands fa-facebook"></i></a></li>
-                    <li><a href="#"><i class="fa-brands fa-instagram"></i></a></li>
-                    <li><a href="#"><i class="fa-brands fa-twitter"></i></i></a></li>
-                </ul>
-                <a href="#top" class="back-to-top-button">Retour en haut</a>
-            </div>
-        </div>
-    </div>
-</footer>
-
+<?php require './footer.html' ?>
 </body>
 </html>

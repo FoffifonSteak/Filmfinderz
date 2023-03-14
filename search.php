@@ -3,17 +3,18 @@ require './include/connection.php';
 
 $q = $_GET['q'] ?? '';
 
-$sql = "SELECT movies.id, movies.title, movies.release_date, movies.rating, movies.rental_price, movies.resume, movies.poster, director.first_name, director.last_name, GROUP_CONCAT(genres.name SEPARATOR ', ') AS genre_names
+    $sql = "SELECT movies.id, movies.title, movies.release_date, movies.rating, movies.rental_price, movies.resume, movies.poster, director.first_name, director.last_name, GROUP_CONCAT(genres.name SEPARATOR ', ') AS genre_names
             FROM filmfinderz.movies
             INNER JOIN filmfinderz.movie_genre ON movies.id = movie_genre.movie_id
             INNER JOIN filmfinderz.genres ON movie_genre.genre_id = genres.id
             INNER JOIN filmfinderz.director ON movies.id_director = director.id
-            WHERE movies.title LIKE :q 
-            OR director.first_name LIKE :q
-            OR director.last_name LIKE :q";
+            WHERE (movies.title LIKE :q 
+                   OR director.first_name LIKE :q
+                   OR director.last_name LIKE :q)";
 
-$genre = $_GET['genre'] ?? '';
-$rating = $_GET['rating'] ?? '';
+$genre = $_POST['genre'] ?? '';
+$rating = $_POST['rating'] ?? '';
+
 
 if (!empty($genre)) {
     $sql .= " AND genres.name = :genre";
@@ -37,17 +38,15 @@ if (!empty($rating)) {
     $statement->bindValue(':rating', $rating);
 }
 
-
 $statement->execute();
 
 $movies = $statement->fetchAll();
-
 
 ?>
 
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="./assets/css/main.css?v=<?= time() ?>">
@@ -58,31 +57,7 @@ $movies = $statement->fetchAll();
     <title>Title</title>
 </head>
 <body>
-<header>
-    <div class="logo">
-        <a href="index.php"><img src="./assets/images/logo.png" alt="Mon logo"></a>
-    </div>
-    <div class="rightHead">
-        <div class="insert">
-            <?php if (isset($_SESSION['is_admin']) && $_SESSION['is_admin'] === true) : ?>
-                <a href="insert.php">Ajouter un film</a>
-            <?php endif; ?>
-        </div>
-        <div class="connect">
-            <?php
-            if (isset($_SESSION['user_id'])) {
-                echo '<a href="logout.php">Se déconnecter</a>';
-                echo '<a style="margin-left: 0; margin-right: 40px" href="cart.php"><i class="fa-solid fa-cart-shopping fa-lg"></i></a>';
-            } else {
-                echo '<a href="signIn.php">Se connecter</a>';
-            }
-            ?>
-        </div>
-        <div class="language">
-            <img src="./assets/images/france.png" alt="flag">
-        </div>
-    </div>
-</header>
+<?php require './header.php' ?>
 <main>
     <h1>Recherche de film</h1>
     <div id="search-box">
@@ -153,36 +128,7 @@ $movies = $statement->fetchAll();
         <?php } ?>
     </div>
 </main>
-<footer>
-    <div class="cartContainer">
-        <div class="footer-row">
-            <div class="footer-column">
-                <h4> Nos produits </h4>
-                <ul>
-                    <li><a href="#"> Films</a></li>
-                    <li><a href="#"> Réalisateurs</a></li>
-                </ul>
-            </div>
-            <div class="footer-column">
-                <h4> Nos services </h4>
-                <ul>
-                    <li><a href="#"> Recherche d'un film</a></li>
-                    <li><a href="#">Newsletter</a></li>
-                    <li><a href="#">Evaluations</a></li>
-                </ul>
-            </div>
-            <div class="footer-column">
-                <h4>Nous suivre</h4>
-                <ul class="social-icons">
-                    <li><a href="#"><i class="fa-brands fa-facebook"></i></a></li>
-                    <li><a href="#"><i class="fa-brands fa-instagram"></i></a></li>
-                    <li><a href="#"><i class="fa-brands fa-twitter"></i></i></a></li>
-                </ul>
-                <a href="#top" class="back-to-top-button">Retour en haut</a>
-            </div>
-        </div>
-    </div>
-</footer>
+<?php require './footer.html' ?>
 </body>
 </html>
 

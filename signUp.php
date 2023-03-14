@@ -6,7 +6,7 @@ $csrf_token = $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
 
 ?>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
@@ -23,7 +23,7 @@ $csrf_token = $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
     </div>
     <div class="rightHead">
         <div class="search">
-            <a href="#"><img src="./assets/images/loupe-arrondie.png" alt="loupe"></a>
+            <a href="search.php"><img src="./assets/images/loupe-arrondie.png" alt="loupe"></a>
         </div>
         <div class="connect">
             <a href="signIn.php">Se connecter</a>

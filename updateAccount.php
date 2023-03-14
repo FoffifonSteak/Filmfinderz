@@ -1,9 +1,27 @@
 <?php
 require './include/connection.php';
 
+if (isset($_SESSION['user_id'])) {
+    $user_id = $_SESSION['user_id'];
+} else {
+    header('Location: signIn.php');
+    exit;
+}
+
 if (!isset($_SESSION['csrf_token'])) {
     $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
 }
+
+
+$sql = 'SELECT username, email FROM users WHERE id = :id';
+
+$query = $db->prepare($sql);
+
+$query->bindValue(':id', $_SESSION['user_id'], PDO::PARAM_INT);
+
+$query->execute();
+
+$user = $query->fetch();
 
 ?>
 <!DOCTYPE html>
@@ -18,43 +36,34 @@ if (!isset($_SESSION['csrf_token'])) {
           crossorigin="anonymous" referrerpolicy="no-referrer"/>
 </head>
 <body>
-<header>
-    <div class="logo">
-        <a href="index.php"><img src="./assets/images/logo.png" alt="Mon logo"></a>
-    </div>
-    <div class="rightHead">
-        <div class="search">
-            <a href="search.php"><img src="./assets/images/loupe-arrondie.png" alt="loupe" style="margin-right: 50px"></a>
-        </div>
-        <div class="language">
-            <img src="./assets/images/france.png" alt="flag">
-        </div>
-    </div>
-</header>
+<?php require './header.php'; ?>
 <main>
     <div class="card">
-        <h4 class="title">Sign In!</h4>
+        <h4 class="title">Update !</h4>
         <form method="post" enctype="multipart/form-data">
-            <input type="hidden" name="csrf_token" value="<?php echo $_SESSION['csrf_token']; ?>">
+            <input type="hidden" name="csrf_token" value="<?php echo $csrf_token; ?>">
             <div class="field">
                 <i class="fa-solid fa-user"></i>
                 <input autocomplete="off" placeholder="Username" class="input-field" name="username"
-                       type="text">
+                       type="text" value="<?php echo $user['username']; ?>">
+            </div>
+            <div class="field">
+                <i class="fa-solid fa-at"></i>
+                <input autocomplete="off"placeholder="Email" class="input-field" name="email"
+                       type="email" value="<?php echo $user['email']; ?>">
             </div>
             <div class="field">
                 <i class="fa-solid fa-lock"></i>
                 <input autocomplete="off" placeholder="Password" class="input-field" name="password"
                        type="password">
             </div>
-            <button class="btn" type="submit">Log in</button>
-            <br>
-            <span>Vous n'avez pas de compte ? <a href="signUp.php" class="signUp">Cliquez-ici</a></span>
+            <button class="btn" type="submit">Update</button>
         </form>
     </div>
 </main>
 </body>
-<?php
 
+<?php
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if (!isset($_POST['csrf_token']) || $_POST['csrf_token'] !== $_SESSION['csrf_token']) {
@@ -63,37 +72,41 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     $username = $_POST['username'] ?? null;
-    $password = $_POST['password'] ?? null;
+    $email = $_POST['email'] ?? null;
 
-    if (!isset($username) || !isset($password)) {
+    if (!isset($username) || !isset($email)) {
         echo "Veuillez remplir tous les champs";
         exit;
     }
 
-    $sql = "SELECT id, password, is_admin FROM users WHERE username = :username";
-    $stmt = $db->prepare($sql);
-    $stmt->bindValue(':username', $username);
-    $stmt->execute();
-    $user = $stmt->fetch();
+    $sql = "UPDATE users SET username = :username, email = :email";
 
-    if (!$user || !password_verify($password, $user['password'])) {
-        echo "Nom d'utilisateur ou mot de passe incorrect";
-        exit;
+
+    if (!empty($_POST['password'])) {
+        $sql .= ", password = :password";
     }
 
+    $sql .= " WHERE id = :id";
 
-    $_SESSION['user_id'] = $user['id'];
-    if ($user['is_admin']) {
-        $_SESSION['is_admin'] = true;
+    $query = $db->prepare($sql);
 
-    } else {
-        $_SESSION['is_admin'] = false;
+    $query->bindValue(':username', $username, PDO::PARAM_STR);
+    $query->bindValue(':email', $email, PDO::PARAM_STR);
+
+
+    if (!empty($_POST['password'])) {
+        $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
+        $query->bindValue(':password', $password, PDO::PARAM_STR);
     }
+
+    $query->bindValue(':id', $_SESSION['user_id'], PDO::PARAM_INT);
+
+    $query->execute();
 
     header('Location: index.php');
-    setcookie('lastLogin', date('Y-m-d H:i:s'), time() + 365 * 24 * 3600, null, null, false, true);
-    exit;
 }
 
 ?>
 </html>
+
+
