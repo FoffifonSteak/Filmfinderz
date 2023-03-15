@@ -62,5 +62,12 @@ $cart = $query->fetchAll();
 </div>
 <?php require './footer.html' ?>
 </body>
+<script>
+    const notyf = new Notyf()
+    <?php if (isset($_SESSION['message'])) { ?>
+        notyf.success('<?= $_SESSION['message'] ?>')
+    <?php unset($_SESSION['message']);
+    } ?>
+</script>
 </html>
 
