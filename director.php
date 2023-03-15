@@ -1,30 +1,23 @@
 <?php
 require './include/connection.php';
 
-$sql = 'SELECT title, first_name, last_name, birthday FROM director
-LEFT JOIN movies ON director.id = movies.id_director;';
+$sql = "SELECT director.id, birthday, first_name, last_name, GROUP_CONCAT(IFNULL(movies.title, 'N/A') SEPARATOR '; ') AS title
+        FROM director
+        LEFT JOIN movies ON director.id = movies.id_director
+        GROUP BY director.id";
 
 $statement = $db->prepare($sql);
 $statement->execute();
-$directors = $statement->fetchAll(PDO::FETCH_ASSOC);
 
-
+$directors = $statement->fetchAll();
 
 ?>
 
 <!doctype html>
 <html lang="fr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" href="./assets/css/main.css?v=<?= time() ?>">
+    <?php require './head.php' ?>
     <link rel="stylesheet" href="./assets/css/director.css?v=<?= time() ?>">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css"
-          integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A=="
-          crossorigin="anonymous" referrerpolicy="no-referrer"/>
-    <title>Document</title>
 </head>
 <body>
 <?php require './header.php' ?>
@@ -38,15 +31,15 @@ $directors = $statement->fetchAll(PDO::FETCH_ASSOC);
                 <h2><?= $director['first_name'] ?> <?= $director['last_name'] ?></h2>
                 <p>Année de naissance : <?= date_format($birthdate, 'd/m/Y') ?></p>
                 <?php if ($director['title'] !== null) { ?>
-                    <p>Film : <?= $director['title'] ?></p>
+                    <p>Films : <?= $director['title'] ?></p>
                 <?php } else { ?>
                     <p>Ce réalisateur n'a pas de films dans la base de données</p>
                 <?php } ?>
             </div>
         <?php } ?>
-
     </div>
 </main>
+
 <?php require './footer.html' ?>
 </body>
 

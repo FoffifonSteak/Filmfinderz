@@ -48,13 +48,9 @@ $movies = $statement->fetchAll();
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <meta charset="UTF-8">
-    <link rel="stylesheet" href="./assets/css/main.css?v=<?= time() ?>">
-    <link rel="stylesheet" href="./assets/css/search.css?v=<?= time() ?>">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css"
-          integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A=="
-          crossorigin="anonymous" referrerpolicy="no-referrer"/>
-    <title>Title</title>
+    <?php require './head.php' ?>
+    <link rel="stylesheet" href="./assets/css/search.css">
+    <title>FilmFinderz - Recherche</title>
 </head>
 <body>
 <?php require './header.php' ?>

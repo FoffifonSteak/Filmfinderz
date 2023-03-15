@@ -82,7 +82,7 @@ footer {
 }
 
 .footer-column ul li a {
-    color: #555;
+    color: #858484;
     text-decoration: none;
 }
 
@@ -140,10 +140,6 @@ footer {
     .logo img {
         height: 60px;
         margin-bottom: 20px;
-    }
-
-    .language {
-        display: none;
     }
 
     .search img {

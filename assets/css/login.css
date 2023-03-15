@@ -2,8 +2,10 @@
     width: 190px;
     padding: 1.9rem 1.2rem;
     text-align: center;
-    background: #2a2b38;
+    background: #000000;
     margin: 50px auto 0;
+    border-radius: 6px;
+    box-shadow: 0 8px 24px 0 rgba(255, 255, 255, 0.72);
 }
 
 /*Inputs*/
@@ -44,8 +46,7 @@
     text-transform: uppercase;
     padding: 0.6em 1.2em;
     background-color: #1cdaff;
-    color: #5e6681;
-    box-shadow: 0 8px 24px 0 rgba(0, 150, 255, 0.2);
+    color: #000000;
     transition: all .3s ease-in-out;
 }
 
@@ -63,9 +64,10 @@
 }
 
 .btn:hover {
-    background-color: #3f4450;
+    background-color: #020000;
     color: #1cdaff;
-    box-shadow: 0 8px 24px 0 rgb(16 39 112 / 20%);
+    box-shadow: 0 8px 24px 0 rgba(255, 255, 255, 0.72);
+
 }
 
 .btn-link:hover {

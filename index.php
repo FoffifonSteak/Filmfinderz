@@ -10,25 +10,16 @@ $movies = $statement->fetchAll();
 
 <!DOCTYPE html>
 <html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-    <link rel="stylesheet" href="./assets/css/main.css?v=<?= time() ?>">
-    <link rel="stylesheet" href="./assets/css/homePage.css?v=<?= time() ?>">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css"
-          integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A=="
-          crossorigin="anonymous" referrerpolicy="no-referrer"/>
-</head>
+<title>Accueil</title>
+<?php require './head.php' ?>
 <body>
 <?php require './header.php' ?>
 <main>
     <div class="atFirst">
         <section class="featured-film">
             <div class="overlay">
-                <h1>Film à la une</h1>
-                <p>Résumé du film. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed quis leo semper,
-                    sagittis ipsum eu, molestie nisl.</p>
-                <a href="#">Regarder la bande-annonce</a>
+                <h1>Film à la une, <?= $movies[0]['title'] ?></h1>
+                <p><?= $movies[0]['resume'] ?></p>
             </div>
         </section>
         <div class="seeMore">
@@ -47,7 +38,7 @@ $movies = $statement->fetchAll();
                 ?>
                 <div class="carousel-block">
                     <a href="movieInfo.php?id=<?= $movie['id'] ?>">
-                        <img src="./assets/uploads/<?= $movie['poster'] ?>" alt="Image 1">
+                        <img src="./assets/uploads/<?= $movie['poster'] ?>" alt="poster du film">
                     </a>
                     <h3><?= $movie['title'] ?></h3>
                 </div>

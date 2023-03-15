@@ -21,8 +21,12 @@
             }
             ?>
         </div>
-        <div class="language">
-            <img src="./assets/images/france.png" alt="flag">
+        <div class="user">
+            <?php
+            if (isset($_SESSION['user_id'])) {
+                echo '<a href="updateAccount.php" style="text-decoration: none; color: #fff;"><i class="fa-solid fa-user fa-2xl"></i></a>';
+            }
+            ?>
         </div>
     </div>
 </header>

@@ -8,11 +8,6 @@ if (isset($_SESSION['user_id'])) {
     exit;
 }
 
-if (!isset($_SESSION['csrf_token'])) {
-    $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
-}
-
-
 $sql = 'SELECT username, email FROM users WHERE id = :id';
 
 $query = $db->prepare($sql);
@@ -27,13 +22,9 @@ $user = $query->fetch();
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-    <link rel="stylesheet" href="./assets/css/main.css?v=<?= time() ?>">
-    <link rel="stylesheet" href="./assets/css/login.css?v=<?= time() ?>">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css"
-          integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A=="
-          crossorigin="anonymous" referrerpolicy="no-referrer"/>
+    <?php require './head.php' ?>
+    <link rel="stylesheet" href="./assets/css/login.css">
+    <title>Mon compte</title>
 </head>
 <body>
 <?php require './header.php'; ?>
@@ -41,7 +32,6 @@ $user = $query->fetch();
     <div class="card">
         <h4 class="title">Update !</h4>
         <form method="post" enctype="multipart/form-data">
-            <input type="hidden" name="csrf_token" value="<?php echo $csrf_token; ?>">
             <div class="field">
                 <i class="fa-solid fa-user"></i>
                 <input autocomplete="off" placeholder="Username" class="input-field" name="username"
@@ -65,11 +55,6 @@ $user = $query->fetch();
 
 <?php
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-
-    if (!isset($_POST['csrf_token']) || $_POST['csrf_token'] !== $_SESSION['csrf_token']) {
-        echo "Token CSRF invalide";
-        exit;
-    }
 
     $username = $_POST['username'] ?? null;
     $email = $_POST['email'] ?? null;
