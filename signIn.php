@@ -79,6 +79,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 
     $_SESSION['user_id'] = $user['id'];
+    $_SESSION['message'] = "Vous êtes connecté";
     if ($user['is_admin']) {
         $_SESSION['is_admin'] = true;
 

@@ -11,12 +11,15 @@ if (isset($_GET['id'])) {
     $query->bindValue(':id', $id, PDO::PARAM_INT);
     $query->bindValue(':user_id', $user_id, PDO::PARAM_INT);
     $query->execute();
+    $_SESSION['message'] = "Le film a été supprimé du panier";
 }else {
     $sql = 'DELETE FROM cart WHERE user_id = :user_id';
     $query = $db->prepare($sql);
     $query->bindValue(':user_id', $user_id, PDO::PARAM_INT);
     $query->execute();
+    $_SESSION['message'] = "Le panier a été vidé";
 }
+
 
 header('Location: cart.php');
 ?>

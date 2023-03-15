@@ -99,6 +99,10 @@ $movies = $statement->fetchAll();
         carouselContainer.style.transform = `translateX(-${currentIndex * 25}%)`;
     });
 
+        const notyf = new Notyf()
+        <?php if (isset($_SESSION['message'])): ?>
+        notyf.success('<?= $_SESSION['message'] ?>')
+        <?php unset($_SESSION['message']); endif; ?>
 </script>
 
 </html>

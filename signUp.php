@@ -92,6 +92,7 @@ $stmt->bindValue(':created_at', $date);
 $stmt->execute();
 
 $_SESSION['user_id'] = $db->lastInsertId();
+$_SESSION['message'] = "Vous êtes inscrit !";
 header('Location: index.php');
 
 

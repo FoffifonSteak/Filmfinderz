@@ -117,4 +117,6 @@ if (!empty($_POST['title']) && !empty($_POST['release_date']) && !empty($_POST['
 
 }
 
+$_SESSION['message'] = "Le film a bien été ajouté";
+
 ?>
