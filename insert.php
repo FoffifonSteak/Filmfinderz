@@ -114,9 +114,10 @@ if (!empty($_POST['title']) && !empty($_POST['release_date']) && !empty($_POST['
         $query->bindValue(':genre_id', $genre, PDO::PARAM_INT);
         $query->execute();
     }
-
+    $_SESSION['message'] = "Le film a bien été ajouté";
+    header('Location: index.php');
 }
 
-$_SESSION['message'] = "Le film a bien été ajouté";
+
 
 ?>
